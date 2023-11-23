@@ -1,0 +1,37 @@
+import math 
+
+  
+
+x1 = math.sqrt(28) 
+
+x2 = 50/10 
+
+x1_1 = 5.29 
+
+x2_2 = 2.63 
+
+  
+
+def function(x1, x2, x1_1, x2_2): 
+
+  real_error_x1 = abs((x1 - x1_1) / x1) 
+
+  real_error_x2 = abs((x2 - x2_2) / x2) 
+
+  
+
+  if real_error_x1 < real_error_x2: 
+
+    print("Перша рівність точніше з відносною похибкою:", f"{real_error_x1:.10f}") 
+
+  elif real_error_x1 > real_error_x2: 
+
+    print("Друга рівність точніше з відносною похибкою:", f"{real_error_x2:.10f}") 
+
+  else: 
+
+    print("Обидві рівності мають однакову точність з відносною похибкою:", f"{real_error_x1:.10f}") 
+
+  
+
+function(x1, x2, x1_1, x2_2) 
