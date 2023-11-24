@@ -1,0 +1,29 @@
+import math
+from scipy.misc import derivative
+
+def f(x):
+  return 9*pow(x,4) + 12*pow(x,3) - 36*pow(x,2) - 2
+
+eps = 0.0001
+a = -1
+b = 0
+
+def metod_newton(a, b, eps):
+  df_2 = derivative(f, b, n = 2)
+
+  if(f(b) * df_2) > 0:
+    x_i = b
+  else:
+    x_i = a
+
+  df_1 = derivative(f, x_i)
+  h = f(x_i) / df_1
+  x1 = x_i - h
+
+  while(abs(x1 - x_i) > eps):
+    x_i = x1
+    x1 = x_i - f(x_i) / df_1
+  return print("Метод Ньютона: ", x1)
+
+metod_newton(a, b, eps)
+metod_newton(1, 2, eps)
