@@ -1,0 +1,84 @@
+import numpy as np
+from scipy.optimize import least_squares
+import matplotlib.pyplot as plt
+
+def function_e(x):
+  return np.cos(np.sin(x))
+
+x = np.arange(0.1, 1.1, 0.1)
+y = np.ones(len(x))
+
+count = 0
+count_list = []
+for i in x:
+  y[count] = function_e(i)
+  count_list.append(count)
+  count += 1
+
+print("Наші данні.")
+print("i = ", count_list)
+print("X = ", x)
+print("Y = ", y)
+
+def a_1(yx, x, x2, y):
+  return (yx - x * y)/(x2 - x**2)
+
+def a_0(y, a1, x):
+  return y - a1 * x
+
+sum_x = np.sum(x)
+sum_x2 = np.sum(x**2)
+sum_y = np.sum(y)
+sum_y_x = np.sum(y * x)
+
+x_ = sum_x / len(x)
+x_2 = sum_x2 / len(x)
+y_ = sum_y / len(y)
+y_x = sum_y_x / len(x)
+
+print("Аналітичні розрахунки")
+print("x_ = ", x_)
+print("x_2 = ", x_2)
+print("y_ = ", y_)
+print("y_x = ", y_x)
+
+a1 = a_1(y_x, x_, x_2, y_)
+print("a1 = ", a1)
+print("a0 = ", a_0(y_, a1, x_))
+
+def function_prim(a, x, y):
+ return np.polyval(a, x) - y
+
+a0 = np.array([1, 1])
+res_lsq = least_squares(function_prim, x0=a0, args=(x, y))
+print(f"a0 = {res_lsq.x[0].round(2)}, a1 = {res_lsq.x[1].round(2)}")
+
+x_p = np.linspace(min(x), max(x), 20)
+y_p = np.polyval(res_lsq.x, x_p)
+plt.plot(x, y, 'o')
+plt.plot(x_p, y_p, 'r')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title("МНК наближення прямою")
+plt.grid(True)
+plt.show()
+
+
+
+def function_parab(a, x, y):
+ return a[0] + a[1] * x + a[2] * x**2 - y
+
+a0 = np.array([1, 1, 1])
+res_lsq = least_squares(function_parab,x0 = a0, args = (x, y))
+print(f"a0 = {res_lsq.x[0].round(2)}, a1 = {res_lsq.x[1].round(2)}, a2 = {res_lsq.x[2].round(2)}")
+
+f = lambda x: sum([u * v for u, v in zip(res_lsq.x, [1, x, x**2])])
+x_p = np.linspace(min(x), max(x), 20)
+y_p = f(x_p)
+plt.plot(x,y, 'o')
+plt.plot(x_p, y_p, 'g')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title("МНК наближення параболою")
+plt.grid(True)
+plt.show()
