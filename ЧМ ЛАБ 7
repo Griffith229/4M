@@ -1,0 +1,38 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+def newton_interpolation(x, y, x_interp):
+    n = len(x) - 1
+    F = np.zeros((n + 1, n + 2))
+    F[:, 0] = x
+    F[:, 1] = y
+
+    for j in range(2, n + 2):
+        for i in range(n - j + 2):
+            F[i, j] = (F[i + 1, j - 1] - F[i, j - 1]) / (F[i + j - 1, 0] - F[i, 0])
+
+    result = F[0, 1]
+    for j in range(2, n + 2):
+        result += F[0, j] * np.prod(x_interp - F[:j - 1, 0])
+
+    return result
+
+# Задані значення
+x = np.array([0.101, 0.106, 0.111, 0.116, 0.121, 0.126, 0.131, 0.136, 0.141, 0.146, 0.151])
+y = np.array([1.2618, 1.2764, 1.2912, 1.3061, 1.3213, 1.3366, 1.3520, 1.3677, 1.3835, 1.3995, 1.4157])
+
+# Точки для інтерполяції
+x_interp = np.array([0.112, 0.145, 0.104, 0.133, 0.107, 0.137])
+
+# Значення інтерполяційної функції в точках для інтерполяції
+y_interp = [newton_interpolation(x, y, xi) for xi in x_interp]
+
+# Графік
+plt.scatter(x, y, label='Дані точки', color='blue')
+plt.scatter(x_interp, y_interp, color='red', label='Точки для інтерполяції', marker='x')
+plt.plot(x_interp, y_interp, '--', label='Інтерполяційна функція')
+plt.title('Інтерполяційна функція методом Ньютона')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
