@@ -1,0 +1,19 @@
+import numpy as np 
+
+  
+
+A = np.array([[-1, 0, 2], 
+
+              [0, 1, 0], 
+
+              [1, 2, -1]]) 
+
+n = 2   
+
+A_power_n = np.linalg.matrix_power(A, n) 
+
+  
+
+print(f"Матриця A^{n}:") 
+
+print(A_power_n)
