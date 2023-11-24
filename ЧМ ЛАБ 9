@@ -1,0 +1,109 @@
+import numpy as np 
+
+import sympy as sp 
+
+import matplotlib.pyplot as plt 
+
+from scipy.interpolate import approximate_taylor_polynomial 
+
+  
+
+x = sp.symbols("x") 
+
+f_x = sp.cos(sp.sin(2*x))
+
+  
+
+f1 = sp.diff(f_x, x) 
+
+f2 = sp.diff(f1, x) 
+
+f3 = sp.diff(f2, x) 
+
+f4 = sp.diff(f3, x) 
+
+  
+
+print("Формули похідних") 
+
+print("f'(x) = ", f1) 
+
+print("f''(x) = ", f2) 
+
+print("f'''(x) = ", f3) 
+
+print("f''''(x) = ", f4) 
+
+  
+
+x0 = 0 
+
+f_x0 = f_x.subs(x, x0).evalf() 
+
+f1_x0 = f1.subs(x, x0).evalf() 
+
+f2_x0 = f2.subs(x, x0).evalf() 
+
+f3_x0 = f3.subs(x, x0).evalf() 
+
+f4_x0 = f4.subs(x, 1).evalf() 
+
+  
+
+print("Значення похідних в точках") 
+
+print(f_x0) 
+
+print(f1_x0) 
+
+print(f2_x0) 
+
+print(f3_x0) 
+
+print(f4_x0) 
+
+  
+
+T = f_x0 + f1_x0 * (x - x0) + (f2_x0 / 2) * (x - x0)2 + (f3_x0 / 6) * (x - x0)**3 
+
+  
+
+print("f(0) = ", f_x0) 
+
+print("T(x) = ", T.evalf()) 
+
+  
+
+remainder_term = (f4_x0 / sp.factorial(3+1)) * (1 - 0)(3+1) 
+
+print("Оцінка похибки") 
+
+print(remainder_term) 
+
+  
+
+x_vals = np.linspace(-2, 2, 1000) 
+
+f_vals = np.array([f_x.subs(x, xi).evalf() for xi in x_vals]) 
+
+T_vals = np.array([T.subs(x, xi).evalf() for xi in x_vals]) 
+
+  
+
+fig, ax = plt.subplots() 
+
+ax.plot(x_vals, f_vals, label="f(x)", color = "g") 
+
+ax.plot(x_vals, T_vals, label="T(x)", color = "r") 
+
+ax.legend() 
+
+ax.set_xlabel("x") 
+
+ax.set_ylabel("y") 
+
+ax.set_title("Графік функції та наближення многочлена Тейлора") 
+
+plt.grid(True) 
+
+plt.show()
