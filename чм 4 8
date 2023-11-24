@@ -1,0 +1,31 @@
+8. Створіть прямокутну матрицю A, яка має N рядків і стовпці M з випадковими елементами. Визначте, скільки негативних елементів міститься в кожному стовпці та в кожному рядку матриці. 
+
+import numpy as np 
+
+  
+
+N = 5  
+
+M = 5   
+
+  
+
+A = np.random.randn(N, M)   
+
+negative_elements_in_columns = np.sum(A < 0, axis=0) 
+
+negative_elements_in_rows = np.sum(A < 0, axis=1) 
+
+  
+
+print("Матриця A:") 
+
+print(A) 
+
+print("\nКількість негативних елементів в кожному стовпці:") 
+
+print(negative_elements_in_columns) 
+
+print("\nКількість негативних елементів в кожному рядку:") 
+
+print(negative_elements_in_rows)
