@@ -1,0 +1,65 @@
+import numpy as np  
+
+  
+
+   
+
+  
+
+N = 4    
+
+  
+
+M = 5    
+
+  
+
+   
+
+  
+
+A = np.random.rand(N, M)  
+
+  
+
+total_sum = np.sum(A)  
+
+  
+
+column_sums = np.sum(A, axis=0)  
+
+  
+
+column_fractions = column_sums / total_sum  
+
+  
+
+   
+
+  
+
+print("Матриця A:")  
+
+  
+
+print(A)  
+
+  
+
+print("\nСума всіх елементів матриці A:", total_sum)  
+
+  
+
+print("\nСуми елементів кожного стовпця:")  
+
+  
+
+print(column_sums)  
+
+  
+
+print("\nДолі суми елементів кожного стовпця в сумі всіх елементів:")  
+
+  
+
+print(column_fractions) 
