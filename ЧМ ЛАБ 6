@@ -1,0 +1,103 @@
+import numpy as np 
+
+import matplotlib.pyplot as plt 
+
+from scipy.interpolate import lagrange 
+
+  
+
+x_i = np.array([-1,-0,1,2])
+
+fx_i = np.array([5,-11,-3,23])
+
+print("x_i = ", x_i) 
+
+print("f(x_i) = ", fx_i) 
+
+  
+
+dots = [-2,-0.5,0.5,1.5]
+
+print("Точки = ", dots) 
+
+  
+
+def interpolation_Lagrange_polynomial(x_i, fx_i, dot1): 
+
+  L_i = [] 
+
+  for i in range(len(x_i)): 
+
+    P_i = 1 
+
+    for j in range(len(x_i)): 
+
+      if i != j: 
+
+        P_i *= (dot1 - x_i[j])/(x_i[i] - x_i[j]) 
+
+    L_i.append(P_i) 
+
+  return np.dot(fx_i, L_i) 
+
+  
+
+function_interpolation = [] 
+
+for i in dots: 
+
+  function_interpolation.append(interpolation_Lagrange_polynomial(x_i, fx_i, i)) 
+
+print("Значення функції у точках = ", function_interpolation) 
+
+  
+
+x_i_new = np.linspace(np.min(x_i),np.max(x_i),200) 
+
+  
+
+fx_i_new = [] 
+
+for i in x_i_new: 
+
+  fx_i_new.append(interpolation_Lagrange_polynomial(x_i,fx_i,i)) 
+
+  
+
+plt.plot(x_i, fx_i, 'o', color = 'blue', label = 'Точки') 
+
+plt.plot(x_i_new, fx_i_new, color = 'brown', label = 'Графік полінома Лагранжа') 
+
+plt.title('Графік полінома Лагранжа') 
+
+plt.grid(True) 
+
+plt.xlabel('x') 
+
+plt.ylabel('y') 
+
+plt.legend() 
+
+plt.show() 
+
+  
+
+verif_function = lagrange(x_i, fx_i) 
+
+figure = plt.figure(figsize = (6.4, 5)) 
+
+plt.plot(x_i_new, verif_function(x_i_new), color = 'g', label = 'Графік полінома Лагранжа') 
+
+plt.plot(x_i, fx_i, 'ro', label = 'Точки', markersize = 6) 
+
+plt.title('Перевірка поліному Лагранжа') 
+
+plt.grid() 
+
+plt.xlabel('x') 
+
+plt.ylabel('y') 
+
+plt.legend() 
+
+plt.show()
