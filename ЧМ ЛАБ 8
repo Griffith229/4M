@@ -1,0 +1,27 @@
+import numpy as np
+from scipy.interpolate import CubicSpline
+import matplotlib.pyplot as plt
+
+# Таблично задана функція
+x = np.array([0.6, 0.7, 1.0, 1.5, 1.9])
+y = np.array([2.64, 3.73, 4.35, 3.26, 2.35])
+
+# Побудова кубічного сплайну
+cs = CubicSpline(x, y)
+
+# Генерація точок для побудови гладкої кривої
+xs = np.linspace(x.min(), x.max(), 1000)
+ys = cs(xs)
+
+# Відображення значень сплайна для введених точок
+for i in range(len(x)):
+    print(f"Значення сплайна в точці ({x[i]}, {y[i]}): {cs(x[i])}")
+
+# Візуалізація результатів
+plt.scatter(x, y, label='Таблично задана функція')
+plt.plot(xs, ys, label='Кубічний сплайн', color='red')
+plt.title('Кубічний сплайн для таблично заданої функції')
+plt.xlabel('x')
+plt.ylabel('y')
+plt.legend()
+plt.show()
